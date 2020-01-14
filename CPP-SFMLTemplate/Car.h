@@ -51,10 +51,10 @@ public:
 
 		float beta = angle-atan2(xcp-x,-ycp+y);
 
-		if (sin(beta)<0) angle+=0.005*speed;
-		else angle-=0.005*speed;
+		if (sin(beta)<0) angle+=0.003*speed;
+		else angle-=0.003*speed;
 
-		if ((x-xcp)*(x-xcp)+(y-ycp)*(y-ycp)<25*25) CurrentCheckPoint=(CurrentCheckPoint+1)%10; //X/Y coordinates of the car moves towards the current checkpoint
+		if ((x-xcp)*(x-xcp)+(y-ycp)*(y-ycp)<50*50) CurrentCheckPoint=(CurrentCheckPoint+1)%10; //X/Y coordinates of the car moves towards the current checkpoint
 	}
 
 	void CarMove()

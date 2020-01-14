@@ -69,13 +69,10 @@ void inputs ()
 			car.speed += Accelerate;
 		}
 	}
-	if (Keyboard::isKeyPressed(Keyboard::S)) 
+	if (Keyboard::isKeyPressed(Keyboard::S) && car.speed > -MaxSpeed/2) //Whilst car speed is greater than the -MaxSpeed divided by 2 (MaxSpeed is 20/2 = 10), then Decelerate
 	{
 		S = true;
-		if (car.speed > -MaxSpeed/2) //Whilst car speed is greater than the -MaxSpeed divided by 2 (MaxSpeed is 20/2 = 10), then Decelerate
-		{
-			car.speed -= Decelerate;
-		}
+		car.speed -= Decelerate;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::A)) 
 	{
@@ -106,7 +103,7 @@ void inputs ()
 		van.speed += Accelerate; //Increasing the speed of the van
 	}
 	
-	if (audi.speed < MaxSpeed-1) //If the audis speed value is less than the max speed, then do the following:
+	if (audi.speed < MaxSpeed-10) //If the audis speed value is less than the max speed, then do the following:
 	{
 		audi.speed += Accelerate; //Increasing the speed of the audi
 	}
@@ -137,9 +134,12 @@ void inputs ()
 	van.CarMove(); //Everything to move the car
 	audi.CarMove(); //Everything to move the car
 
-	if (ViperSprite.getGlobalBounds().intersects(AudiSprite.getGlobalBounds()) || ViperSprite.getGlobalBounds().intersects(MustangSprite.getGlobalBounds()) || ViperSprite.getGlobalBounds().intersects(VanSprite.getGlobalBounds()))
+	if (ViperSprite.getGlobalBounds().intersects(AudiSprite.getGlobalBounds())) 
+		//|| ViperSprite.getGlobalBounds().intersects(MustangSprite.getGlobalBounds()) || ViperSprite.getGlobalBounds().intersects(VanSprite.getGlobalBounds()))
 	{
 		cout << "COLLISION" << "\n";
+		audi.x -=10;
+		audi.y -=10;
 	}
 
 	if (Level == 1)
@@ -170,10 +170,10 @@ void inputs ()
 			car.y = 3138; //Sets the cars Y = 3138
 		}
 	}
-	/*if(Mouse::isButtonPressed(Mouse::Left))
+	if(Mouse::isButtonPressed(Mouse::Left))
 	{
 		cout<<Mouse::getPosition(window).x + TrackPosX<<' '<<Mouse::getPosition(window).y + TrackPosY<<'\n';
-	}*/
+	}
 	//cout << TrackPosX << " " << TrackPosY << "\n";
 	Track1Sprite.setPosition(-TrackPosX, -TrackPosY);
 	window.draw(Track1Sprite);
@@ -224,6 +224,8 @@ int main()
 
 	GameAssets(); 
 	
+	Sprite CarType[4] = {ViperSprite, VanSprite, AudiSprite, MustangSprite};
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
